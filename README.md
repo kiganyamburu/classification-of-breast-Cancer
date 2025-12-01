@@ -2,11 +2,12 @@
 
 This repository contains materials for a simple breast cancer classification project using the CSV dataset included in the repository (`data (2).csv`). The goal is to explore, preprocess, train, and evaluate machine learning models that predict breast cancer diagnosis (benign vs malignant).
 
-**Status:** Starter/boilerplate — README and `requirements.txt` are included. I can add runnable scripts or a notebook on request.
+**Status:** Active development — includes Jupyter notebook with EDA and visualizations, dataset, README and `requirements.txt`.
 
 ## Contents
 
 - `data (2).csv` — raw dataset used for training and evaluation (placed at repository root).
+- `Classification_of_Breast_Cancer.ipynb` — Jupyter notebook with exploratory data analysis, visualizations, and modeling.
 - `requirements.txt` — core Python dependencies for development and model training.
 
 ## Quick overview
@@ -22,9 +23,9 @@ This project demonstrates the typical workflow for a classification task:
 ## Requirements
 
 - Python 3.8+ (recommended)
-- Typical libraries used: pandas, numpy, scikit-learn, matplotlib, seaborn, joblib
+- Typical libraries used: pandas, numpy, scikit-learn, matplotlib, seaborn, joblib, altair
 
-Note: `requirements.txt` contains conservative minimum versions. If you want exact pinned versions, I can freeze them from your environment.
+Note: `requirements.txt` contains conservative minimum versions. If you want exact pinned versions, run `pip freeze > requirements.txt` after installation.
 
 ## Setup (PowerShell)
 
@@ -59,10 +60,13 @@ from sklearn.ensemble import RandomForestClassifier
 # Load data
 df = pd.read_csv(r"data (2).csv")
 
-# Example: replace 'target' below with the actual target column name from the CSV
-target_col = 'target'  # <-- update this to the correct column name
-X = df.drop(columns=[target_col])
-y = df[target_col]
+# Clean the data
+df_cleaned = df.drop(columns=['id', 'Unnamed: 32'])
+
+# Prepare features and target
+target_col = 'diagnosis'
+X = df_cleaned.drop(columns=[target_col])
+y = df_cleaned[target_col].map({'B': 0, 'M': 1})  # Convert to numeric
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -84,25 +88,27 @@ python -m venv .\venv
 pip install -r .\requirements.txt
 ```
 
-2. Inspect the CSV to find the label column name. Example (PowerShell):
+2. Open and run the Jupyter notebook:
 
 ```powershell
-python -c "import pandas as pd; print(pd.read_csv('data (2).csv').head())"
+jupyter lab Classification_of_Breast_Cancer.ipynb
 ```
 
-3. Run your training script (if you add `train.py`):
+Or use VS Code's built-in notebook support to open `Classification_of_Breast_Cancer.ipynb`.
 
-```powershell
-python train.py --data "data (2).csv" --target "diagnosis" --out model.joblib
-```
-
-`train.py` is not included by default — tell me if you'd like a ready-to-run `train.py` or notebook and I will add one.
+3. The notebook includes:
+   - Data loading and initial exploration
+   - Cleaning (dropping `id` and `Unnamed: 32` columns)
+   - Diagnosis distribution analysis with interactive Altair visualizations
+   - Descriptive statistics grouped by diagnosis
+   - Box plots and bar charts comparing features between benign and malignant cases
 
 ## Dataset guidance
 
-- Open `data (2).csv` and verify the column that contains the diagnosis/label. Common names are `target`, `diagnosis`, or `label`.
-- If the target is encoded as strings (e.g. `benign` / `malignant`) convert to integers before training: `df['target'] = df['target'].map({'benign':0,'malignant':1})`.
-- If the dataset has an `id` or index column, drop it before training.
+- The dataset contains a `diagnosis` column with values 'B' (Benign) and 'M' (Malignant).
+- Drop the `id` and `Unnamed: 32` columns before training (as shown in the notebook).
+- The target is encoded as strings ('B'/'M') — convert to integers before training: `df['diagnosis'] = df['diagnosis'].map({'B':0,'M':1})`.
+- Features include measurements with suffixes `_mean`, `_se` (standard error), and `_worst` for radius, texture, perimeter, area, smoothness, compactness, concavity, concave points, symmetry, and fractal dimension.
 
 ## Example training & model saving
 
@@ -115,9 +121,11 @@ from sklearn.ensemble import RandomForestClassifier
 import joblib
 
 df = pd.read_csv(r"data (2).csv")
-target_col = 'target'  # update to your label column name
-X = df.drop(columns=[target_col])
-y = df[target_col]
+df_cleaned = df.drop(columns=['id', 'Unnamed: 32'])
+
+target_col = 'diagnosis'
+X = df_cleaned.drop(columns=[target_col])
+y = df_cleaned[target_col].map({'B': 0, 'M': 1})  # B=Benign=0, M=Malignant=1
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 clf = RandomForestClassifier(random_state=42)
@@ -141,10 +149,12 @@ joblib.dump(clf, 'model.joblib')
 
 I recommend adding a `LICENSE` file (MIT is common for small projects). If you want, I can add an `MIT` license now.
 
-## What I can add next
+## What can be added next
 
-- A ready-to-run `train.py` that accepts `--data`, `--target`, and `--out` arguments.
-- A Jupyter notebook with EDA, preprocessing, model training and evaluation.
-- Unit tests for data loading and a basic training smoke test.
+- Complete the modeling section in the notebook (train classifiers, evaluate with confusion matrix and classification report).
+- Add a ready-to-run `train.py` script that accepts `--data`, `--target`, and `--out` arguments.
+- Add cross-validation and hyperparameter tuning examples.
+- Add unit tests for data loading and training pipeline.
+- Create a model comparison section (Logistic Regression, Random Forest, SVM, XGBoost).
 
-Tell me which of the above you'd like me to add and I'll create it.
+Contributions are welcome! Open an issue or submit a pull request.
