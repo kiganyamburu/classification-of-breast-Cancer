@@ -6,8 +6,11 @@ matplotlib>=3.4.3,<4.0
 seaborn>=0.11.2,<1.2
 joblib>=1.1.0,<2.0
 scipy>=1.7.3,<2.0
+altair>=4.2.0,<6.0
+
+# Jupyter support
+jupyterlab>=3.0,<5.0
+notebook>=6.4,<8.0
 
 # Optional / dev
-# jupyterlab>=3.0
-# notebook>=6.4
-# black (code formatter), flake8 (linting)
+# black (code formatter), flake8 (linting), pytest (testing)
