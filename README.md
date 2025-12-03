@@ -9,6 +9,8 @@ This repository contains materials for a simple breast cancer classification pro
 - `data (2).csv` — raw dataset used for training and evaluation (placed at repository root).
 - `Classification_of_Breast_Cancer.ipynb` — Jupyter notebook with exploratory data analysis, visualizations, and modeling.
 - `requirements.txt` — core Python dependencies for development and model training.
+- `create_ppt.py` — Python script to generate a PowerPoint presentation summarizing the project.
+- `generate_assets.py` — Python script to generate visualization assets (charts, plots) for the presentation.
 
 ## Quick overview
 
@@ -23,7 +25,7 @@ This project demonstrates the typical workflow for a classification task:
 ## Requirements
 
 - Python 3.8+ (recommended)
-- Typical libraries used: pandas, numpy, scikit-learn, matplotlib, seaborn, joblib, altair
+- Typical libraries used: pandas, numpy, scikit-learn, matplotlib, seaborn, joblib, altair, python-pptx
 
 Note: `requirements.txt` contains conservative minimum versions. If you want exact pinned versions, run `pip freeze > requirements.txt` after installation.
 
@@ -97,11 +99,24 @@ jupyter lab Classification_of_Breast_Cancer.ipynb
 Or use VS Code's built-in notebook support to open `Classification_of_Breast_Cancer.ipynb`.
 
 3. The notebook includes:
+
    - Data loading and initial exploration
    - Cleaning (dropping `id` and `Unnamed: 32` columns)
    - Diagnosis distribution analysis with interactive Altair visualizations
    - Descriptive statistics grouped by diagnosis
    - Box plots and bar charts comparing features between benign and malignant cases
+
+4. Generate a PowerPoint presentation:
+
+```powershell
+# First, generate visualization assets
+python generate_assets.py
+
+# Then create the PowerPoint presentation
+python create_ppt.py
+```
+
+This will create `Breast_Cancer_Classification_Presentation.pptx` with slides covering project overview, dataset analysis, visualizations, and key findings.
 
 ## Dataset guidance
 

@@ -1,16 +1,17 @@
 # Core dependencies for the breast cancer classification project
-pandas>=1.3.5,<2.0
-numpy>=1.21.0,<2.0
-scikit-learn>=1.0.2,<2.0
-matplotlib>=3.4.3,<4.0
-seaborn>=0.11.2,<1.2
-joblib>=1.1.0,<2.0
-scipy>=1.7.3,<2.0
-altair>=4.2.0,<6.0
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+joblib>=1.3.0
+scipy>=1.10.0
+altair>=5.0.0
+python-pptx>=0.6.21
 
 # Jupyter support
-jupyterlab>=3.0,<5.0
-notebook>=6.4,<8.0
+jupyterlab>=4.0.0
+notebook>=7.0.0
 
 # Optional / dev
 # black (code formatter), flake8 (linting), pytest (testing)
