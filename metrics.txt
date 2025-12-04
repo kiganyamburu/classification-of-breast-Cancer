@@ -1,4 +1,10 @@
-Accuracy: 0.9737
+Accuracy:  0.9737 (97.37%)
+Precision: 1.0000 (100.00%)
+Recall:    0.9286 (92.86%)
+F1-Score:  0.9630 (96.30%)
+
 Confusion Matrix:
-[[72  0]
- [ 3 39]]
+                Predicted
+              Benign  Malignant
+Actual Benign     72        0
+     Malignant     3       39
