@@ -4,6 +4,7 @@ from pptx.enum.text import PP_ALIGN
 from pptx.dml.color import RGBColor
 import os
 
+
 def create_presentation():
     prs = Presentation()
     prs.slide_width = Inches(10)
@@ -11,19 +12,19 @@ def create_presentation():
 
     # Helper to add a slide with title and content
     def add_slide(title_text, content_text=None):
-        slide_layout = prs.slide_layouts[1] # Title and Content
+        slide_layout = prs.slide_layouts[1]  # Title and Content
         slide = prs.slides.add_slide(slide_layout)
         title = slide.shapes.title
         title.text = title_text
         title.text_frame.paragraphs[0].font.size = Pt(40)
         title.text_frame.paragraphs[0].font.bold = True
-        
+
         if content_text:
             content = slide.placeholders[1]
             tf = content.text_frame
             tf.clear()
-            
-            for line in content_text.split('\n'):
+
+            for line in content_text.split("\n"):
                 if line.strip():
                     p = tf.add_paragraph()
                     p.text = line
@@ -33,13 +34,13 @@ def create_presentation():
 
     # Helper to add a slide with title and image
     def add_image_slide(title_text, image_path):
-        slide_layout = prs.slide_layouts[5] # Title Only
+        slide_layout = prs.slide_layouts[5]  # Title Only
         slide = prs.slides.add_slide(slide_layout)
         title = slide.shapes.title
         title.text = title_text
         title.text_frame.paragraphs[0].font.size = Pt(40)
         title.text_frame.paragraphs[0].font.bold = True
-        
+
         if os.path.exists(image_path):
             # Center the image
             left = Inches(1)
@@ -50,12 +51,14 @@ def create_presentation():
             print(f"Warning: {image_path} not found.")
 
     # 1. Title Slide
-    slide_layout = prs.slide_layouts[0] # Title Slide
+    slide_layout = prs.slide_layouts[0]  # Title Slide
     slide = prs.slides.add_slide(slide_layout)
     title = slide.shapes.title
     subtitle = slide.placeholders[1]
     title.text = "Breast Cancer Classification"
-    subtitle.text = "Machine Learning Capstone Project\nPredicting Malignant vs Benign Tumors"
+    subtitle.text = (
+        "Machine Learning Capstone Project\nPredicting Malignant vs Benign Tumors"
+    )
     title.text_frame.paragraphs[0].font.size = Pt(54)
     subtitle.text_frame.paragraphs[0].font.size = Pt(24)
 
@@ -167,15 +170,19 @@ def create_presentation():
         with open("metrics.txt", "r") as f:
             content = f.read()
             metrics_text += content
-            
+
             # Parse accuracy for interpretation
             if "Accuracy:" in content:
-                acc_line = [line for line in content.split('\n') if 'Accuracy:' in line][0]
+                acc_line = [
+                    line for line in content.split("\n") if "Accuracy:" in line
+                ][0]
                 metrics_text += f"\n\nInterpretation:\n"
                 metrics_text += "The model correctly classified the test samples with high accuracy,\n"
                 metrics_text += "demonstrating strong predictive capability for breast cancer diagnosis."
     except FileNotFoundError:
-        metrics_text += "Accuracy: Not calculated yet. Please run generate_assets.py first."
+        metrics_text += (
+            "Accuracy: Not calculated yet. Please run generate_assets.py first."
+        )
 
     add_slide("Results: Model Performance", metrics_text)
 
@@ -233,30 +240,29 @@ def create_presentation():
     add_slide("Future Work & Improvements", future_work)
 
     # 15. Thank You Slide
-    slide_layout = prs.slide_layouts[6] # Blank slide
+    slide_layout = prs.slide_layouts[6]  # Blank slide
     slide = prs.slides.add_slide(slide_layout)
-    
+
     left = Inches(2)
     top = Inches(2.5)
     width = Inches(6)
     height = Inches(2)
-    
+
     textbox = slide.shapes.add_textbox(left, top, width, height)
     text_frame = textbox.text_frame
     text_frame.text = "Thank You"
-    
+
     p = text_frame.paragraphs[0]
     p.alignment = PP_ALIGN.CENTER
     p.font.size = Pt(60)
     p.font.bold = True
-    
+
     # Add subtitle
     p2 = text_frame.add_paragraph()
     p2.text = "\nQuestions & Discussion"
     p2.alignment = PP_ALIGN.CENTER
     p2.font.size = Pt(32)
 
-    
     # Save
     output_file = "Breast_Cancer_Classification_Presentation.pptx"
     prs.save(output_file)
@@ -264,7 +270,9 @@ def create_presentation():
     print(f"✓ File saved as: {output_file}")
     print(f"✓ Total slides: {len(prs.slides)}")
     print(f"\nPresentation includes:")
-    print("  • Clear problem statement explaining what we're solving and why it matters")
+    print(
+        "  • Clear problem statement explaining what we're solving and why it matters"
+    )
     print("  • Step-by-step methodology covering all aspects:")
     print("    - Data source and collection")
     print("    - Data preparation and cleaning")
@@ -274,6 +282,7 @@ def create_presentation():
     print("  • Clear results presentation with visualizations")
     print("  • Clinical interpretation and real-world impact")
     print("\nYou can now present this PowerPoint for your capstone!")
+
 
 if __name__ == "__main__":
     create_presentation()
